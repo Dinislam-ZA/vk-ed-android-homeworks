@@ -1,7 +1,6 @@
 package com.example.homework_1_android
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,7 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
         val item = items[position]
         with(holder){
             textView.text = item
-            if ((position % 2) == 0) textView.setTextColor(Color.parseColor("#FF0000")) else textView.setTextColor(Color.parseColor("#0000ff"))
+            if ((position % 2) == 0) textView.setTextColor(Color.parseColor("#00FFFF")) else textView.setTextColor(Color.parseColor("#FF0000"))
         }
 
     }
@@ -45,7 +44,5 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
         val newItem = "${items.size + 1}"
         items.add(newItem)
         notifyItemInserted(items.size - 1)
-
-        Log.d("mes" ,items.toString())
     }
 }
