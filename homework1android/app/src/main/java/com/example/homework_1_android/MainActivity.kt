@@ -1,5 +1,6 @@
 package com.example.homework_1_android
 
+import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
@@ -22,10 +23,10 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         if(Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            recyclerView.layoutManager = GridLayoutManager(this, 4)
+            recyclerView.layoutManager = MyGridLayoutManager(this, 4)
         }
         else{
-            recyclerView.layoutManager = GridLayoutManager(this, 3)
+            recyclerView.layoutManager = MyGridLayoutManager(this, 3)
         }
 
         val button = findViewById<View>(R.id.mainButton)
@@ -45,4 +46,11 @@ class MainActivity : AppCompatActivity() {
         itemList?.let { adapter.setItems(it) }
     }
 
+}
+
+class MyGridLayoutManager(context: Context?, spanCount: Int):
+    GridLayoutManager(context, spanCount) {
+    override fun canScrollVertically(): Boolean {
+        return false
+    }
 }
