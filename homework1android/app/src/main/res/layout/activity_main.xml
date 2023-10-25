@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainRecycleView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             tools:listitem="@layout/list_item"
             />
 
@@ -25,8 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
-            android:text="@string/add_button_text" />
-    </LinearLayout>
+            android:text="@string/add_button_text"
+            android:layout_below="@id/mainRecycleView"
+            android:layout_marginTop="8dp"
+            />
+    </RelativeLayout>
 
 
-</androidx.core.widget.NestedScrollView>
+</ScrollView>
