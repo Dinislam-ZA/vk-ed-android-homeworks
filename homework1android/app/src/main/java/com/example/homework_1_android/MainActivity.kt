@@ -1,11 +1,9 @@
 package com.example.homework_1_android
 
-import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -20,37 +18,29 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.mainRecycleView)
         adapter = MainAdapter()
-        recyclerView.adapter = adapter
-
         if(Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            recyclerView.layoutManager = MyGridLayoutManager(this, 4)
+            recyclerView.layoutManager = GridLayoutManager(this, 4)
         }
         else{
-            recyclerView.layoutManager = MyGridLayoutManager(this, 3)
+            recyclerView.layoutManager = GridLayoutManager(this, 3)
         }
-
-        val button = findViewById<View>(R.id.mainButton)
-        button.setOnClickListener {
-            adapter.addItem()
-        }
+        recyclerView.adapter = adapter
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putStringArrayList("itemList", ArrayList(adapter.getItems()))
+        outState.putParcelableArrayList(ARRAY_LIST_KEY, ArrayList(adapter.getItems()))
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val itemList = savedInstanceState.getStringArrayList("itemList")?.toMutableList()
+        val itemList = savedInstanceState.getParcelableArrayList<CountViews>(ARRAY_LIST_KEY)?.toMutableList()
+
         itemList?.let { adapter.setItems(it) }
     }
 
-}
-
-class MyGridLayoutManager(context: Context?, spanCount: Int):
-    GridLayoutManager(context, spanCount) {
-    override fun canScrollVertically(): Boolean {
-        return false
+    companion object{
+        const val ARRAY_LIST_KEY = "itemList"
     }
+
 }
