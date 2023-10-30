@@ -1,5 +1,6 @@
 package com.example.homework_1_android
 
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kotlinx.parcelize.Parcelize
 import java.lang.IllegalArgumentException
 
-class MainAdapter : RecyclerView.Adapter<ViewHolder>() {
+class MainAdapter(val orientation: Int) : RecyclerView.Adapter<ViewHolder>() {
 
     private var items = mutableListOf<CountViews>(CountViews.ButtonView)
 
@@ -84,15 +85,22 @@ class MainAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup = getSpanSizeLookup()
+        (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup = getSpanSizeLookup(orientation)
     }
 
-    private fun getSpanSizeLookup(): GridLayoutManager.SpanSizeLookup {
+    private fun getSpanSizeLookup(orientation: Int): GridLayoutManager.SpanSizeLookup {
         return object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return when (items[position]) {
                     is CountViews.NumberView -> 1
-                    is CountViews.ButtonView -> 3
+                    is CountViews.ButtonView -> {
+                        if (orientation == Configuration.ORIENTATION_LANDSCAPE){
+                            4
+                        }
+                        else{
+                            3
+                        }
+                    }
                 }
             }
         }

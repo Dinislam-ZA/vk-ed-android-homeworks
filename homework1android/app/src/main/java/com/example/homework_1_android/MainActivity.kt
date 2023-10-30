@@ -17,8 +17,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.mainRecycleView)
-        adapter = MainAdapter()
-        if(Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+        val orientation = Resources.getSystem().configuration.orientation
+        adapter = MainAdapter(orientation)
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
             recyclerView.layoutManager = GridLayoutManager(this, 4)
         }
         else{
