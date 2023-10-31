@@ -1,29 +1,31 @@
 package com.example.homework_1_android
 
 import android.content.res.Configuration
-import android.graphics.Color
+
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kotlinx.parcelize.Parcelize
 import java.lang.IllegalArgumentException
 
-class MainAdapter(val orientation: Int) : RecyclerView.Adapter<ViewHolder>() {
+class MainAdapter(private val orientation: Int) : RecyclerView.Adapter<ViewHolder>() {
 
     private var items = mutableListOf<CountViews>(CountViews.ButtonView)
+    private lateinit var recyclerView: RecyclerView
 
     inner class NumberViewHolder(itemView: View) : ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.itemTextView)
 
         fun onBind(item: CountViews.NumberView, position: Int){
             textView.text = item.number
-            if ((position % 2) == 0) textView.setTextColor(Color.parseColor("#0000FF")) else textView.setTextColor(Color.parseColor("#FF0000"))
+            if ((position % 2) == 0) textView.setTextColor(ContextCompat.getColor(textView.context, R.color.red)) else textView.setTextColor(ContextCompat.getColor(textView.context, R.color.blue))
         }
     }
 
@@ -81,10 +83,14 @@ class MainAdapter(val orientation: Int) : RecyclerView.Adapter<ViewHolder>() {
         val newItem = "${items.size}"
         items.add(items.size - 1, CountViews.NumberView(newItem))
         notifyItemInserted(items.size - 2)
+        if(this::recyclerView.isInitialized){
+            recyclerView.smoothScrollToPosition(items.size-2)
+        }
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
         (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup = getSpanSizeLookup(orientation)
     }
 
