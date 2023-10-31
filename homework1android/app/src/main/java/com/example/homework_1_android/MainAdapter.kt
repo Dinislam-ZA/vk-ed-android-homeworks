@@ -25,7 +25,7 @@ class MainAdapter(private val orientation: Int) : RecyclerView.Adapter<ViewHolde
 
         fun onBind(item: CountViews.NumberView, position: Int){
             textView.text = item.number
-            if ((position % 2) == 0) textView.setTextColor(ContextCompat.getColor(textView.context, R.color.red)) else textView.setTextColor(ContextCompat.getColor(textView.context, R.color.blue))
+            if ((position % 2) == 0) textView.setTextColor(ContextCompat.getColor(textView.context, R.color.blue)) else textView.setTextColor(ContextCompat.getColor(textView.context, R.color.red))
         }
     }
 
