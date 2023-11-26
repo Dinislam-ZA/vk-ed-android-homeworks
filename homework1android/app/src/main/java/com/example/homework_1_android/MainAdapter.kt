@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kotlinx.parcelize.Parcelize
 import java.lang.IllegalArgumentException
 
-class MainAdapter(private val orientation: Int) : RecyclerView.Adapter<ViewHolder>() {
+class MainAdapter(private val orientation: Int, val listener: MainAdapterOnClickListener) : RecyclerView.Adapter<ViewHolder>() {
 
     private var items = mutableListOf<CountViews>(CountViews.ButtonView)
     private lateinit var recyclerView: RecyclerView
@@ -23,10 +23,15 @@ class MainAdapter(private val orientation: Int) : RecyclerView.Adapter<ViewHolde
     inner class NumberViewHolder(itemView: View) : ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.itemTextView)
 
+        //color for background, not text
         fun onBind(item: CountViews.NumberView, position: Int){
             textView.text = item.number
-            if ((position % 2) == 0) textView.setTextColor(ContextCompat.getColor(textView.context, R.color.blue)) else textView.setTextColor(ContextCompat.getColor(textView.context, R.color.red))
+            if ((position % 2) == 0) itemView.setBackgroundColor(ContextCompat.getColor(textView.context, R.color.blue)) else itemView.setBackgroundColor(ContextCompat.getColor(textView.context, R.color.red))
+            itemView.setOnClickListener {
+                listener.onNumberClickListener(position)
+            }
         }
+
     }
 
     inner class ButtonViewHolder(itemView: View) : ViewHolder(itemView) {
@@ -124,4 +129,10 @@ sealed class CountViews: Parcelable{
     data class NumberView(val number:String):CountViews()
     @Parcelize
     data object ButtonView : CountViews()
+}
+
+interface MainAdapterOnClickListener{
+
+    fun onNumberClickListener(pos: Int)
+
 }

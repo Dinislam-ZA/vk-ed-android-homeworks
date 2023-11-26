@@ -1,14 +1,16 @@
 package com.example.homework_1_android
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainAdapterOnClickListener {
 
     private lateinit var adapter: MainAdapter
     private lateinit var recyclerView: RecyclerView
@@ -19,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.mainRecycleView)
         val orientation = Resources.getSystem().configuration.orientation
-        adapter = MainAdapter(orientation)
+        adapter = MainAdapter(orientation, this)
         if(orientation == Configuration.ORIENTATION_LANDSCAPE){
             recyclerView.layoutManager = GridLayoutManager(this, 4)
         }
@@ -48,5 +50,12 @@ class MainActivity : AppCompatActivity() {
     companion object{
         const val ARRAY_LIST_KEY = "itemList"
     }
+
+    override fun onNumberClickListener(pos: Int) {
+        val intent = Intent(this, SecondActivity::class.java)
+        if ((pos % 2) == 0) intent.putExtra("Color", getColor(R.color.blue)) else intent.putExtra("Color", getColor(R.color.red))
+        startActivity(intent)
+    }
+
 
 }
