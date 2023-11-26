@@ -1,15 +1,16 @@
 package com.example.homework_1_android
 
-import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainAdapterOnClickListener {
 
     private lateinit var adapter: MainAdapter
     private lateinit var recyclerView: RecyclerView
@@ -19,38 +20,42 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.mainRecycleView)
-        adapter = MainAdapter()
-        recyclerView.adapter = adapter
-
-        if(Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            recyclerView.layoutManager = MyGridLayoutManager(this, 4)
+        val orientation = Resources.getSystem().configuration.orientation
+        adapter = MainAdapter(orientation, this)
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
+            recyclerView.layoutManager = GridLayoutManager(this, 4)
         }
         else{
-            recyclerView.layoutManager = MyGridLayoutManager(this, 3)
+            recyclerView.layoutManager = GridLayoutManager(this, 3)
         }
-
-        val button = findViewById<View>(R.id.mainButton)
-        button.setOnClickListener {
-            adapter.addItem()
-        }
+        recyclerView.adapter = adapter
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putStringArrayList("itemList", ArrayList(adapter.getItems()))
+        outState.putParcelableArrayList(ARRAY_LIST_KEY, ArrayList(adapter.getItems()))
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val itemList = savedInstanceState.getStringArrayList("itemList")?.toMutableList()
+        val itemList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            savedInstanceState.getParcelableArrayList(ARRAY_LIST_KEY, CountViews::class.java)?.toMutableList()
+        } else {
+            @Suppress("DEPRECATION") savedInstanceState.getParcelableArrayList(ARRAY_LIST_KEY)
+        }
+
         itemList?.let { adapter.setItems(it) }
     }
 
-}
-
-class MyGridLayoutManager(context: Context?, spanCount: Int):
-    GridLayoutManager(context, spanCount) {
-    override fun canScrollVertically(): Boolean {
-        return false
+    companion object{
+        const val ARRAY_LIST_KEY = "itemList"
     }
+
+    override fun onNumberClickListener(pos: Int) {
+        val intent = Intent(this, SecondActivity::class.java)
+        if ((pos % 2) == 0) intent.putExtra("Color", getColor(R.color.blue)) else intent.putExtra("Color", getColor(R.color.red))
+        startActivity(intent)
+    }
+
+
 }

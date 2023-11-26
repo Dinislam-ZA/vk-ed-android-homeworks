@@ -1,15 +1,14 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-parcelize")
 }
 
 android {
-    namespace = "com.example.homework_1_android"
+    namespace = "com.example.homework_2_android"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.homework_1_android"
+        applicationId = "com.example.homework_2_android"
         minSdk = 28
         targetSdk = 33
         versionCode = 1
@@ -38,9 +37,25 @@ android {
 
 dependencies {
 
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    val pagingVersion = "3.2.1"
+    val glideVersion = "4.16.0"
+
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //Paging 3
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
+
+    //Glide
+    implementation("com.github.bumptech.glide:glide:$glideVersion")
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

@@ -1,33 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.recyclerview.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainRecycleView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:listitem="@layout/list_item"
+    tools:context=".MainActivity"
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mainRecycleView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/list_item"
-            />
-
-        <Button
-            android:id="@+id/mainButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:text="@string/add_button_text"
-            android:layout_below="@id/mainRecycleView"
-            android:layout_marginTop="8dp"
-            />
-    </RelativeLayout>
+    />
 
 
-</ScrollView>
