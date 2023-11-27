@@ -9,7 +9,7 @@ class GifRepository {
     private val api = RetrofitClient.service
 
     suspend fun getTrendingGifs(): List<Gif>? {
-        val response = api.fetchGifs(Constants.apiKey, 100, 100)
+        val response = api.fetchGifs(Constants.apiKey, 10, 1)
         return response.body()?.let { GifMapper.mapGifResponseListToGifList(it) }
     }
 }
