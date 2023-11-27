@@ -1,13 +1,16 @@
 package com.example.homework_2_android.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.paging.cachedIn
 import com.example.homework_2_android.data.model.Gif
 import com.example.homework_2_android.data.repository.GifRepository
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MainViewModel(val repository: GifRepository) : ViewModel() {
@@ -29,8 +32,11 @@ class MainViewModel(val repository: GifRepository) : ViewModel() {
         _state.value = MainState.Loading
         viewModelScope.launch {
             try {
-                val gifs = repository.getTrendingGifs()
-                _state.value = MainState.Success(gifs)
+                val gifs = repository.getTrendingGifs().cachedIn(viewModelScope)
+                Log.d("gifs", gifs.toString())
+                gifs.collectLatest {
+                    _state.value = MainState.Success(it)
+                }
             }
             catch (e:Exception){
                _state.value = MainState.Error("Something goes wrong...")

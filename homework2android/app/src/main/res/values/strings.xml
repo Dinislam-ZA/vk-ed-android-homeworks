@@ -2,4 +2,5 @@
     <string name="app_name">homework-2-android</string>
     <string name="load_error_message">Ошибка загрузки</string>
     <string name="load_error_dialog_button_text">Повторить</string>
+    <string name="retry">Retry</string>
 </resources>

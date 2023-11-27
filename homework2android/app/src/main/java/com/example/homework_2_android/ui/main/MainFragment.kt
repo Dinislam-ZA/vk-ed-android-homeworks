@@ -1,17 +1,22 @@
 package com.example.homework_2_android.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.homework_2_android.R
 import com.example.homework_2_android.data.model.Gif
 import com.example.homework_2_android.databinding.FragmentMainBinding
 import com.example.homework_2_android.ui.adapters.GifAdapter
+import com.example.homework_2_android.ui.adapters.GifLoadStateAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 
 class MainFragment : Fragment() {
@@ -47,13 +52,17 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun showGifs(gifs: List<Gif>?) {
+    private fun showGifs(gifs: PagingData<Gif>) {
+        Log.d("State", "Success")
         binding.progressBar.visibility = View.GONE
-        gifs?.let { adapter.setListItem(it) }
+        lifecycleScope.launch {
+            adapter.submitData(gifs)
+        }
     }
 
     private fun showLoad(){
         binding.progressBar.visibility = View.VISIBLE
+        Log.d("State", "Loading")
     }
 
     private fun showError(errorMessage: String){
@@ -71,12 +80,16 @@ class MainFragment : Fragment() {
     }
 
     private fun initializeRecycleView(){
-        adapter = GifAdapter()
         binding.gifRecycleView.layoutManager = StaggeredGridLayoutManager(
             2,
             StaggeredGridLayoutManager.VERTICAL
         )
-        binding.gifRecycleView.adapter = adapter
+        adapter = GifAdapter()
+        val loadStateAdapter = GifLoadStateAdapter { adapter.retry() }
+        binding.gifRecycleView.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = loadStateAdapter,
+            footer = loadStateAdapter
+        )
     }
 
 }
