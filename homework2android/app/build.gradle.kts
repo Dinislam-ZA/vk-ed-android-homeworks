@@ -1,3 +1,15 @@
+import java.util.Properties
+
+// Загружаем local.properties
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { localProperties.load(it) }
+}
+
+// Извлекаем ключ API
+val giphyApiKey = localProperties["GIPHY_API_KEY"] as? String ?: ""
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -20,7 +32,7 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val giphyApiKey = findProperty("GIPHY_API_KEY") as String?
+
         buildConfigField("String", "GIPHY_API_KEY", "\"${giphyApiKey ?: ""}\"")
     }
 

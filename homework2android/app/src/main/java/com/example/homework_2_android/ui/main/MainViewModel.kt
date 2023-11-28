@@ -39,7 +39,7 @@ class MainViewModel(private val repository: GifRepository) : ViewModel() {
             }
             catch (e:Exception){
                 Log.d("error in viewmodel", "Something goes wrong")
-               _state.value = MainState.Error("Something goes wrong...")
+               _state.value = MainState.Error(" goes wrong...")
             }
         }
     }

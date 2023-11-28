@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import com.example.homework_2_android.R
 import com.example.homework_2_android.data.model.Gif
 import com.example.homework_2_android.databinding.FragmentMainBinding
@@ -23,12 +24,6 @@ class GifAdapter(val repeatButtonClickListener: ReloadButtonClickListener) : Rec
     private var gifs: MutableList<Gif> = mutableListOf()
     private var items: MutableList<ItemView> = mutableListOf()
     private var state: MainState = MainState.Success(null)
-
-    fun addGifs(newGifs: List<Gif>) {
-        val startPosition = gifs.size
-        gifs.addAll(newGifs)
-        notifyItemRangeInserted(startPosition, newGifs.size)
-    }
 
     fun showLoadingBar(){
         if (items.isNotEmpty()){
@@ -59,8 +54,12 @@ class GifAdapter(val repeatButtonClickListener: ReloadButtonClickListener) : Rec
 //        val diffCallback = ItemViewDiffItemCallback(items, newItems)
 //        val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-        items = newItems.toMutableList()
-        notifyDataSetChanged()
+        val startPosition = items.size
+        items.addAll(newItems)
+        notifyItemRangeInserted(startPosition, newItems.size)
+
+//        items = newItems.toMutableList()
+//        notifyDataSetChanged()
         //diffResult.dispatchUpdatesTo(this)
 
     }

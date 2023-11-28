@@ -55,7 +55,7 @@ class MainFragment : Fragment(), ReloadButtonClickListener {
     }
 
     private fun reload(gifs: List<Gif>?) {
-        adapter.addGifs(gifs!!)
+        adapter.setListItem(gifs!!)
     }
 
 
@@ -98,7 +98,7 @@ class MainFragment : Fragment(), ReloadButtonClickListener {
             gifRecycleView.adapter = adapter
             gifRecycleView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (!recyclerView.canScrollVertically(1) && dy > 0) {
+                    if (!recyclerView.canScrollVertically(1) && dy > 0 && (viewModel.state.value !is MainState.Error)) {
                         viewModel.processIntent(MainIntent.LoadGifs)
                     }
                 }

@@ -23,6 +23,12 @@ class ItemViewDiffItemCallback(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+        return if (oldItem is ItemView.GifView && newItem is ItemView.GifView) {
+            oldItem.gif.id == newItem.gif.id
+        } else {
+            oldItem::class == newItem::class
+        }
     }
 }

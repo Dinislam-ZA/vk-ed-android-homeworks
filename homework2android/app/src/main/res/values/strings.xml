@@ -3,4 +3,6 @@
     <string name="load_error_message">Ошибка загрузки</string>
     <string name="load_error_dialog_button_text">Повторить</string>
     <string name="reload_text">Попробовать снова</string>
+    <string name="error_title">Не удалось загрузить изображения</string>
+    <string name="error_hint_text">Проверьте подключение к сети и повторите попытку</string>
 </resources>
