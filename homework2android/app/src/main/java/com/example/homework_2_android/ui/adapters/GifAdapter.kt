@@ -1,5 +1,6 @@
 package com.example.homework_2_android.ui.adapters
 
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -29,11 +30,16 @@ class GifAdapter : RecyclerView.Adapter<GifAdapter.GifViewHolder>() {
             .placeholder(R.drawable.loading_gif_placeholder)
             .into(holder.binding.imageView)
 
-        // Установка пропорций изображения
-        val params = holder.binding.imageView.layoutParams
-        val imageViewWidth = holder.binding.imageView.width
-        params.height = (imageViewWidth * (gifItem.height.toFloat() / gifItem.width.toFloat())).toInt()
-        holder.binding.imageView.layoutParams = params
+        val context = holder.binding.imageView.context
+        val displayMetrics: DisplayMetrics = context.resources.displayMetrics
+        val widthDp = displayMetrics.widthPixels
+        val imageViewWidthDp = ((widthDp / 2f) - 4f * 2f).toInt()
+        with(holder.binding.imageView.layoutParams) {
+            this.width = ViewGroup.LayoutParams.MATCH_PARENT
+            this.height =
+                (imageViewWidthDp * (gifItem.height.toFloat() / gifItem.width.toFloat())).toInt()
+            holder.binding.imageView.layoutParams = this
+        }
     }
 
     override fun getItemCount(): Int = gifs.size
