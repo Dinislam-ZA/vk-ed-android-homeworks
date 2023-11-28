@@ -11,3 +11,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 }
+
+// Внедрить изменения по рассчету высоты и ширины imageView
+// Размеры плейсхолдеров и ошибок поправить
+// Покрасить плейсхолдер и ошибку
+// Починить стейты экрана

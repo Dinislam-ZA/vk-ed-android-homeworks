@@ -35,7 +35,6 @@ class GifPagingSource:  PagingSource<Int, Gif>() {
                 LoadResult.Error(HttpException(response))
             }
         } catch (e: HttpException) {
-            Log.d("err", "error 2")
             return LoadResult.Error(e)
         } catch (e: Exception) {
             Log.d("err", e.toString())

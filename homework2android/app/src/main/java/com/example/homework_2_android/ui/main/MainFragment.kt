@@ -36,11 +36,7 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
         viewModel.state.observe(this.viewLifecycleOwner){
-            when(it){
-                is MainState.Loading -> showLoad()
-                is MainState.Success -> showGifs(it.gifs)
-                is MainState.Error -> showError(it.message)
-            }
+            render(it)
         }
 
         return binding.root
@@ -49,6 +45,14 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeRecycleView()
+    }
+
+    private fun render(state: MainState){
+        when(state){
+            is MainState.Loading -> showLoad()
+            is MainState.Success -> showGifs(state.gifs)
+            is MainState.Error -> showError(state.message)
+        }
     }
 
 

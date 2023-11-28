@@ -16,9 +16,9 @@ class GifRepository {
     suspend fun getTrendingGifs(): Flow<PagingData<Gif>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 20, // Задайте желаемый размер страницы
-                enablePlaceholders = false, // Выберите, нужны ли вам плейсхолдеры
-                initialLoadSize = 40 // Размер начальной загрузки, обычно больше, чем pageSize
+                pageSize = 20,
+                enablePlaceholders = false,
+                initialLoadSize = 40
             ),
             pagingSourceFactory = { GifPagingSource() }
         ).flow

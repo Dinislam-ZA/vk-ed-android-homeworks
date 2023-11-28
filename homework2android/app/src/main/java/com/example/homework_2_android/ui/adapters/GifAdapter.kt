@@ -1,5 +1,6 @@
 package com.example.homework_2_android.ui.adapters
 
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -27,18 +28,16 @@ class GifAdapter : PagingDataAdapter<Gif, GifAdapter.GifViewHolder>(GifDiffItemC
             .error(R.drawable.error_drawable)
             .into(holder.binding.imageView)
 
-        // Установка пропорций изображения
-        holder.binding.imageView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                holder.binding.imageView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                val imageViewWidth = holder.binding.imageView.width
-                if (imageViewWidth > 0 && gifItem.width > 0 && gifItem.height > 0) {
-                    val params = holder.binding.imageView.layoutParams
-                    params.height = (imageViewWidth * (gifItem.height.toFloat() / gifItem.width.toFloat())).toInt()
-                    holder.binding.imageView.layoutParams = params
-                }
-            }
-        })
+        val context = holder.binding.imageView.context
+        val displayMetrics: DisplayMetrics = context.resources.displayMetrics
+        val widthDp = displayMetrics.widthPixels
+        val imageViewWidthDp = ((widthDp / 2f) - 4f * 2f).toInt()
+        with(holder.binding.imageView.layoutParams) {
+            this.width = ViewGroup.LayoutParams.MATCH_PARENT
+            this.height =
+                (imageViewWidthDp * (gifItem.height.toFloat() / gifItem.width.toFloat())).toInt()
+            holder.binding.imageView.layoutParams = this
+        }
     }
 
 
