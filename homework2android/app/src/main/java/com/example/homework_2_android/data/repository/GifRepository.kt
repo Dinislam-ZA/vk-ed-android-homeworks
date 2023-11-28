@@ -1,5 +1,6 @@
 package com.example.homework_2_android.data.repository
 
+import android.util.Log
 import com.example.homework_2_android.Constants
 import com.example.homework_2_android.data.api.RetrofitClient
 import com.example.homework_2_android.data.mappers.GifMapper

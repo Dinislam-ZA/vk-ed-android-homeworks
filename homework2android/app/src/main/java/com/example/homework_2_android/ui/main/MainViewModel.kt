@@ -16,6 +16,8 @@ class MainViewModel(private val repository: GifRepository) : ViewModel() {
     private val _state = MutableLiveData<MainState>()
     val state: LiveData<MainState> = _state
 
+    private var isLoading = false
+
     init {
         processIntent(MainIntent.LoadGifs)
     }
@@ -27,6 +29,8 @@ class MainViewModel(private val repository: GifRepository) : ViewModel() {
     }
 
     private fun loadGifs(){
+        if(isLoading) return
+        isLoading = true
         _state.value = MainState.Loading
         viewModelScope.launch {
             try {
@@ -34,6 +38,9 @@ class MainViewModel(private val repository: GifRepository) : ViewModel() {
             }
             catch (e:Exception){
                _state.value = MainState.Error
+            }
+            finally {
+                isLoading = false
             }
         }
     }

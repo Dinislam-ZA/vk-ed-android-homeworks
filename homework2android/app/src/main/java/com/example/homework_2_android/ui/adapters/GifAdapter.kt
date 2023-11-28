@@ -1,6 +1,7 @@
 package com.example.homework_2_android.ui.adapters
 
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
