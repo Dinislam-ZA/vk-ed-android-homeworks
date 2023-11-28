@@ -16,8 +16,6 @@ class MainViewModel(private val repository: GifRepository) : ViewModel() {
     private val _state = MutableLiveData<MainState>()
     val state: LiveData<MainState> = _state
 
-    private val gifs: MutableList<Gif> = mutableListOf()
-
     init {
         processIntent(MainIntent.LoadGifs)
     }
@@ -25,7 +23,6 @@ class MainViewModel(private val repository: GifRepository) : ViewModel() {
    fun processIntent(intent: MainIntent) {
         when(intent){
             is MainIntent.LoadGifs -> loadGifs()
-            is MainIntent.ResetGifs -> resetPagination()
         }
     }
 
@@ -33,26 +30,17 @@ class MainViewModel(private val repository: GifRepository) : ViewModel() {
         _state.value = MainState.Loading
         viewModelScope.launch {
             try {
-                gifs.addAll(repository.getTrendingGifs())
-                Log.d("gifs in viewmodel", gifs.toString())
-                _state.value = MainState.Success(gifs)
+                _state.value = MainState.Success(repository.getTrendingGifs())
             }
             catch (e:Exception){
-                Log.d("error in viewmodel", "Something goes wrong")
-               _state.value = MainState.Error(" goes wrong...")
+               _state.value = MainState.Error
             }
         }
-    }
-
-    fun resetPagination() {
-        repository.resetPagination()
-        loadGifs()
     }
 
     companion object{
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-                val application = checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
 
                 return MainViewModel(
                     GifRepository()

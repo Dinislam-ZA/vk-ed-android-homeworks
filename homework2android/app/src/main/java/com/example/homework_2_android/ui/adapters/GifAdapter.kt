@@ -1,7 +1,6 @@
 package com.example.homework_2_android.ui.adapters
 
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,21 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
 import com.example.homework_2_android.R
 import com.example.homework_2_android.data.model.Gif
-import com.example.homework_2_android.databinding.FragmentMainBinding
 import com.example.homework_2_android.databinding.GifItemBinding
 import com.example.homework_2_android.databinding.LoadingItemBinding
 import com.example.homework_2_android.databinding.RepeatButtonItemBinding
-import com.example.homework_2_android.ui.main.MainState
 import java.lang.Exception
 
 class GifAdapter(val repeatButtonClickListener: ReloadButtonClickListener) : RecyclerView.Adapter<ViewHolder>() {
 
-    private var gifs: MutableList<Gif> = mutableListOf()
     private var items: MutableList<ItemView> = mutableListOf()
-    private var state: MainState = MainState.Success(null)
 
     fun showLoadingBar(){
         if (items.isNotEmpty()){
@@ -50,18 +44,9 @@ class GifAdapter(val repeatButtonClickListener: ReloadButtonClickListener) : Rec
 
     fun setListItem(newList: List<Gif>) {
         val newItems = newList.map { ItemView.GifView(it) }
-//
-//        val diffCallback = ItemViewDiffItemCallback(items, newItems)
-//        val diffResult = DiffUtil.calculateDiff(diffCallback)
-
         val startPosition = items.size
         items.addAll(newItems)
         notifyItemRangeInserted(startPosition, newItems.size)
-
-//        items = newItems.toMutableList()
-//        notifyDataSetChanged()
-        //diffResult.dispatchUpdatesTo(this)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

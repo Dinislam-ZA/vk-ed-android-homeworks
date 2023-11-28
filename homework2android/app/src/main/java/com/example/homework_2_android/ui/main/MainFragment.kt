@@ -49,42 +49,20 @@ class MainFragment : Fragment(), ReloadButtonClickListener {
         when(state){
             is MainState.Loading -> showLoad()
             is MainState.Success -> showGifs(state.gifs)
-            is MainState.Error -> showError(state.message)
-            is MainState.SuccessReload -> reload(state.gifs)
+            is MainState.Error -> showError()
         }
     }
 
-    private fun reload(gifs: List<Gif>?) {
-        adapter.setListItem(gifs!!)
-    }
-
-
     private fun showGifs(gifs: List<Gif>?) {
-        //binding.progressBar.visibility = View.GONE
         adapter.removeLoadingOrErrorState()
-        Log.d("gifs in fragment", gifs.toString())
         gifs?.let { adapter.setListItem(it) }
     }
 
     private fun showLoad(){
-//        binding.progressBar.visibility = View.VISIBLE
-        Log.d("func", "showLoad")
         adapter.showLoadingBar()
     }
 
-    private fun showError(errorMessage: String){
-//        val dialog = context?.let {
-//            MaterialAlertDialogBuilder(it)
-//                .setTitle(getString(R.string.load_error_message))
-//                .setMessage(errorMessage)
-//                .setPositiveButton(getString(R.string.load_error_dialog_button_text)) { dialog, which ->
-//                    viewModel.processIntent(MainIntent.ResetGifs)
-//                }
-//                .create()
-//        }
-//
-//        dialog?.show()
-        Log.d("func", "showError")
+    private fun showError(){
         adapter.showReloadButton()
     }
 
@@ -107,7 +85,7 @@ class MainFragment : Fragment(), ReloadButtonClickListener {
     }
 
     override fun onClickReload() {
-        viewModel.processIntent(MainIntent.ResetGifs)
+        viewModel.processIntent(MainIntent.LoadGifs)
     }
 
 }
