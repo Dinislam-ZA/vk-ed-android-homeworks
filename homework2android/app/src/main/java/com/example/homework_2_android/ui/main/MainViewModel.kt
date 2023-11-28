@@ -1,5 +1,6 @@
 package com.example.homework_2_android.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,10 +11,12 @@ import com.example.homework_2_android.data.model.Gif
 import com.example.homework_2_android.data.repository.GifRepository
 import kotlinx.coroutines.launch
 
-class MainViewModel(val repository: GifRepository) : ViewModel() {
+class MainViewModel(private val repository: GifRepository) : ViewModel() {
 
     private val _state = MutableLiveData<MainState>()
     val state: LiveData<MainState> = _state
+
+    private val gifs: MutableList<Gif> = mutableListOf()
 
     init {
         processIntent(MainIntent.LoadGifs)
@@ -22,6 +25,7 @@ class MainViewModel(val repository: GifRepository) : ViewModel() {
    fun processIntent(intent: MainIntent) {
         when(intent){
             is MainIntent.LoadGifs -> loadGifs()
+            is MainIntent.ResetGifs -> resetPagination()
         }
     }
 
@@ -29,22 +33,26 @@ class MainViewModel(val repository: GifRepository) : ViewModel() {
         _state.value = MainState.Loading
         viewModelScope.launch {
             try {
-                val gifs = repository.getTrendingGifs()
+                gifs.addAll(repository.getTrendingGifs())
+                Log.d("gifs in viewmodel", gifs.toString())
                 _state.value = MainState.Success(gifs)
             }
             catch (e:Exception){
+                Log.d("error in viewmodel", "Something goes wrong")
                _state.value = MainState.Error("Something goes wrong...")
             }
         }
     }
 
+    fun resetPagination() {
+        repository.resetPagination()
+        loadGifs()
+    }
 
     companion object{
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val application = checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
-                // Create a SavedStateHandle for this ViewModel from extras
-
 
                 return MainViewModel(
                     GifRepository()

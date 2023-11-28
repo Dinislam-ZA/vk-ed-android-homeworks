@@ -11,4 +11,6 @@ sealed class MainState {
 
     data class Success(val gifs: List<Gif>?): MainState()
 
+    data class SuccessReload(val gifs: List<Gif>?): MainState()
+
 }

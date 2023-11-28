@@ -1,7 +1,7 @@
 package com.example.homework_2_android.data.api
 
+import com.example.homework_2_android.data.api.dto.GifResponse
 import com.example.homework_2_android.data.model.Gif
-import com.example.homework_2_android.data.model.GifResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

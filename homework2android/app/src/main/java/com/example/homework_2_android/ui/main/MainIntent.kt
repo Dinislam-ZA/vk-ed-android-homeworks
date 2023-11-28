@@ -4,4 +4,5 @@ sealed class MainIntent {
 
     object LoadGifs : MainIntent()
 
+    object ResetGifs: MainIntent()
 }
