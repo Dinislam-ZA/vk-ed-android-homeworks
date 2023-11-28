@@ -46,7 +46,7 @@ class GifAdapter(val repeatButtonClickListener: ReloadButtonClickListener) : Rec
     fun setListItem(newList: List<Gif>) {
         val newItems = newList.map { ItemView.GifView(it) }
         val startPosition = items.size
-        items.addAll(newItems)
+        items = newItems.toMutableList()
         notifyItemRangeInserted(startPosition, newItems.size)
     }
 

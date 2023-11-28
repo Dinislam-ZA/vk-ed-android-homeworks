@@ -15,6 +15,7 @@ class MainViewModel(private val repository: GifRepository) : ViewModel() {
 
     private val _state = MutableLiveData<MainState>()
     val state: LiveData<MainState> = _state
+    private val gifs: MutableList<Gif> = mutableListOf()
 
     private var isLoading = false
 
@@ -34,7 +35,8 @@ class MainViewModel(private val repository: GifRepository) : ViewModel() {
         _state.value = MainState.Loading
         viewModelScope.launch {
             try {
-                _state.value = MainState.Success(repository.getTrendingGifs())
+                gifs.addAll(repository.getTrendingGifs())
+                _state.value = MainState.Success(gifs)
             }
             catch (e:Exception){
                _state.value = MainState.Error
