@@ -3,9 +3,9 @@ package com.example.homework3android.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.homework3android.data.HomeRepository
+import com.example.homework3android.data.repositories.HomeRepository
 
-class HomeViewModel(val repository:HomeRepository) : ViewModel() {
+class HomeViewModel(val repository: HomeRepository) : ViewModel() {
     // TODO: Implement the ViewModel
 
 
