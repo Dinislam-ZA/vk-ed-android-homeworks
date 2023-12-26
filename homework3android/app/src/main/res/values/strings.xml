@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">ArtSpace</string>
     <string name="look_button">Посмотреть</string>
-    <string name="filter_all">ArtSpace</string>
-    <string name="filter_today">ArtSpace</string>
-    <string name="filter_only_blog">ArtSpace</string>
-    <string name="filter_only_art">ArtSpace</string>
+    <string name="filter_all">Все</string>
+    <string name="filter_today">Только сегодня</string>
+    <string name="filter_only_blog">Только блог</string>
+    <string name="filter_only_art">Только арты</string>
     <string name="home_screen">Подписки</string>
     <string name="feed_screen">Рекомендации</string>
     <string name="add">Добавить</string>
@@ -12,8 +12,7 @@
     <string name="account_screen">Профиль</string>
     <string name="like">Кнопка лайка</string>
     <string name="comment">Кнопка чата</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="author_avatar_desc">аватар автора поста</string>
+    <string name="filter_on_last_week">На прошлой неделе</string>
+    <string name="hello_blank_fragment">Йо</string>
 
 </resources>

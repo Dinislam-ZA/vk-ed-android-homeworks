@@ -3,6 +3,7 @@ package com.example.homework3android.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.homework3android.data.model.UserModel
 import com.example.homework3android.databinding.ItemAccountBinding
 import com.example.homework3android.databinding.ItemFilterBinding
@@ -23,6 +24,7 @@ class ArtistAdapter(private val artists: List<UserModel>) : RecyclerView.Adapter
         fun bind(artist: UserModel) {
             with(binding){
                 textUserName.text = artist.username
+                Glide.with(root).load(artist.avatar).into(imageUserAvatar)
             }
         }
     }

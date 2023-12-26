@@ -13,16 +13,17 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_postFragment"
-            app:destination="@id/postFragment" />
+            app:destination="@id/postFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/postFragment"
         android:name="com.example.homework3android.ui.post.PostFragment"
         android:label="fragment_post"
-        tools:layout="@layout/fragment_post" />
-    <fragment
-        android:id="@+id/addFragment2"
-        android:name="com.example.homework3android.ui.add.AddFragment"
-        android:label="fragment_add"
-        tools:layout="@layout/fragment_add" />
+        tools:layout="@layout/fragment_post"
+        >
+        <argument
+            android:name="postArg"
+            app:argType="com.example.homework3android.data.model.PostVO" />
+    </fragment>
 </navigation>

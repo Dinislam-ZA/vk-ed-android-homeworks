@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.homework3android.data.repositories.HomeRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
@@ -31,6 +32,7 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
         isLoading = true
         _state.value = HomeState.Load
         viewModelScope.launch {
+            delay(2000)
             _state.value = HomeState.Success(repository.getData())
             isLoading = false
         }

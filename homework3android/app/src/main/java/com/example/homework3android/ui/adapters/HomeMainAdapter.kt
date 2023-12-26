@@ -5,22 +5,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.homework3android.R
 import com.example.homework3android.data.model.PostModel
+import com.example.homework3android.data.model.PostVO
 import com.example.homework3android.data.model.UserModel
 import com.example.homework3android.databinding.ItemAccountListBinding
 import com.example.homework3android.databinding.ItemArtPostBinding
 import com.example.homework3android.databinding.ItemFilterListBinding
 
-class HomeMainAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeMainAdapter(val listener: HomeMainListener, val filters:List<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var artists: List<UserModel> = listOf()
-    private var filters: List<String> = listOf()
     private var posts: List<PostModel> = listOf()
 
-    fun setData(newArtists: List<UserModel>, newFilters: List<String>, newPosts:List<PostModel>){
+    fun setData(newArtists: List<UserModel>, newPosts:List<PostModel>){
         artists = newArtists
-        filters = newFilters
         posts = newPosts
         notifyDataSetChanged()
     }
@@ -76,13 +76,16 @@ class HomeMainAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class PostViewHolder(private val binding: ItemArtPostBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: PostModel) {
             with(binding){
-                username.text = artists.find { a -> a.id == post.author }?.username
+                val author = artists.find { a -> a.id == post.author }
+                username.text = author?.username
                 artworkTitle.text = post.title
                 artworkDescription.text= post.description
                 likeCount.text = post.likes.toString()
                 commentCount.text = post.chats.toString()
+                Glide.with(root).load(post.image).into(artworkImage)
+                Glide.with(root).load(author?.avatar).centerCrop().into(profileImage)
                 moreButton.setOnClickListener {
-
+                    listener.onMoreButtonClick(PostVO(post.title, post.description, post.image, post.likes, post.chats, author?.username, author?.avatar))
                 }
             }
         }
@@ -90,8 +93,10 @@ class HomeMainAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 }
 
 
-//sealed class HomeItem {
-//    object Artists : HomeItem()
-//    object Filters : HomeItem()
-//    data class Post(val post: PostModel) : HomeItem()
-//}
+interface HomeMainListener{
+
+    fun onMoreButtonClick(post: PostVO)
+
+}
+
+

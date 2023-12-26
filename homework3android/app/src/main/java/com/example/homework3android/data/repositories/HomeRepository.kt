@@ -2,7 +2,7 @@ package com.example.homework3android.data.repositories
 
 import com.example.homework3android.data.dto.HomeDTO
 import com.example.homework3android.data.model.UserModel
-import com.example.homework3android.localstorage.DataBase
+import com.example.homework3android.data.localstorage.DataBase
 
 class HomeRepository {
 
