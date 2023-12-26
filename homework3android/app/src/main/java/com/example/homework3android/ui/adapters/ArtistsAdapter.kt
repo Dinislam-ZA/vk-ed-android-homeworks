@@ -21,7 +21,9 @@ class ArtistAdapter(private val artists: List<UserModel>) : RecyclerView.Adapter
 
     class ArtistViewHolder(private val binding: ItemAccountBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(artist: UserModel) {
-            // TODO: Bind artist data to UI elements
+            with(binding){
+                textUserName.text = artist.username
+            }
         }
     }
 }

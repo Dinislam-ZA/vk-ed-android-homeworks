@@ -19,7 +19,9 @@ class FilterAdapter(private val filters: List<String>) : RecyclerView.Adapter<Fi
 
     class FilterViewHolder(private val binding: ItemFilterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(filter: String) {
-            // TODO: Bind filter data to UI elements
+           with(binding){
+               tvFilterName.text = filter
+           }
         }
     }
 }

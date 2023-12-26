@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="main_text_color">#FFFFFFFF</color>
+    <color name="home_background">#2A2929</color>
+    <color name="post_background">#1D1B20</color>
+    <color name="button_dark_light_color">#5B00A2</color>
+    <color name="normal_filter_color">#D9D9D9</color>
+    <color name="selected_filter_color">#838383</color>
+    <color name="nav_comp_background">#211F26</color>
+    <color name="nav_elem_tint">#BAB9BC</color>
+    <color name="secondary_background">#141218</color>
+</resources>
