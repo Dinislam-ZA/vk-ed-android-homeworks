@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:backgroundTint="@color/post_background"
@@ -26,7 +26,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/acc_placeholder"
             android:background="@drawable/circle_shape"
-            android:clipToOutline="true"
             />
 
         <TextView
@@ -36,7 +35,7 @@
             android:layout_toEndOf="@id/profile_image"
             android:layout_alignTop="@id/profile_image"
             android:layout_alignBottom="@id/profile_image"
-            android:text="DenikUmeetRisovat"
+            tools:text="DenikUmeetRisovat"
             android:gravity="center"
             android:maxLength="30"
             android:textColor="@color/main_text_color"
@@ -48,14 +47,15 @@
             android:layout_height="200dp"
             android:layout_below="@id/profile_image"
             android:layout_marginTop="8dp"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            />
 
         <TextView
             android:id="@+id/artwork_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/artwork_image"
-            android:text="Pixel Steve"
+            tools:text="Pixel Steve"
             android:layout_marginHorizontal="16dp"
             android:textColor="@color/main_text_color"
             android:textStyle="bold"
@@ -68,7 +68,7 @@
             android:layout_below="@id/artwork_title"
             android:layout_marginHorizontal="16dp"
             android:textColor="@color/main_text_color"
-            android:text="Пиксельная графика — форма цифрового изображения, созданного на компьютере с помощью растрового графического редактора..."
+            tools:text="Пиксельная графика — форма цифрового изображения, созданного на компьютере с помощью растрового графического редактора..."
             android:maxLines="2"
             android:ellipsize="end"/>
 
@@ -76,7 +76,6 @@
             android:id="@+id/rate_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/artwork_description"
             android:layout_alignTop="@id/more_button"
             android:layout_marginHorizontal="16dp"
             android:layout_alignBottom="@id/more_button"
@@ -96,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_text_color"
-                android:text="128"
+                tools:text="128"
                 android:layout_marginStart="4dp"/>
 
             <ImageButton
@@ -113,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_text_color"
-                android:text="18"
+                tools:text="18"
                 android:layout_marginStart="4dp"/>
 
         </LinearLayout>
